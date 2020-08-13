@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Agora API</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+    <div class="container mt-1">
+        <div class="row">
+            <div class="col-12">
+                <form class="form-inline">
+                    <div class="form-group mr-1">
+                        <input class="form-control" type="text" placeholder="App ID" id="appId" required>
+                    </div>
+                    <div class="form-group mr-1">
+                        <input class="form-control" type="text" placeholder="Channel" id="channel" required>
+                    </div>
+                    <div class="form-group mr-1">
+                        <input class="form-control" type="text" placeholder="Token" id="token">
+                    </div>
+                    <div class="form-group mr-1">
+                        <button class="btn btn-primary" id="join">Join</button>
+                    </div>
+                    <div class="form-group mr-1">
+                        <button class="btn btn-danger" id="leave">Leave</button>
+                    </div>
+                    <div class="form-group mr-1">
+                        <button class="btn btn-info" id="publish">Publish</button>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-secondary" id="unpublish">Unpublish</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div id="local_stream" class="video-placeholder"></div>
+                <div id="local_video_info" class="video-profile hide"></div>
+                <div id="video_autoplay_local" class="autoplay-fallback hide"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="./vendors/jquery.min.js"></script>
+    <script src="./vendors/agora.min.js"></script>
+</body>
+</html>
