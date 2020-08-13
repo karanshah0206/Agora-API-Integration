@@ -1,3 +1,5 @@
+const { AgoraRTC } = require("./AgoraRTCSDK-3.1.2");
+
 // Error Handling
 function handleFail (err) {
     console.log("Error: " + err);
@@ -47,3 +49,40 @@ function addCanvas (streamId) {
         })();
     }, 0);
 }
+
+// Initiating Agora Client
+var client = AgoraRTC.createClient({
+    mode: 'live',
+    codec: 'h264'
+});
+
+client.init("c0041179099d492fa2dafcc82ec735c0", () => {
+    console.log("Client Initialized!");
+});
+
+// Join Agora Client To Channel
+client.join(null, 'heavyhurdle', null, (uid) => {  // First Parameter is ID, null dynamically generates. Second parameter is channel name.
+    var localStream = AgoraRTC.createStream({
+        streamID: uid,
+        audio: true,
+        video: true,
+        screen: false
+    });
+    localStream.init(() => {
+        localStream.play("local-container");
+        client.publish(localStream, handleFail); // Publish the stream
+
+        client.on("stream-added", (evt) => { // Check for any published remote streams
+            client.subscribe(evt.stream, handleFail);
+        });
+
+        client.on("stream-subscribed", (evt) => { // Add Video Stream If Subscribed
+            var stream = evt.stream;
+            addVideoStream(stream.getId());
+            stream.play(stream.getId());
+            addCanvas(stream.getId());
+        });
+
+        client.on("stream-remove", removeVideoStream); // Remove Remote Video At User Disconnect
+    }, handleFail);
+}, handleFail);
