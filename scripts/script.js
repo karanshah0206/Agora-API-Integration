@@ -1,5 +1,3 @@
-const { AgoraRTC } = require("./AgoraRTCSDK-3.1.2");
-
 // Error Handling
 function handleFail (err) {
     console.log("Error: " + err);
