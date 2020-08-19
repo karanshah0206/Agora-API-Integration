@@ -23,27 +23,28 @@ function removeVideoStream (evt) {
 
 // Canvas
 function addCanvas (streamId) {
-    let video = document.getElementById(`video${streamId}`);
-    let canvas = document.createElement('canvas');
-    canvasContainer.appendChild(canvas);
-    let ctx = canvas.getContext('2d');
+    alert("Canvas!");
+    // let video = document.getElementById(`video${streamId}`);
+    // let canvas = document.createElement('canvas');
+    // canvasContainer.appendChild(canvas);
+    // let ctx = canvas.getContext('2d');
 
-    video.addEventListener('loadedmetadata', () => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-    });
-    video.addEventListener('play', () => {
-        var $this = this;
-        (function loop() {
-            if (!$this.paused && !$this.ended) {
-                if ($this.width !== canvas.width) {
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                }
-                ctx.drawImage(loop, 1000/30); // 30 FPS
-            }
-        })();
-    }, 0);
+    // video.addEventListener('loadedmetadata', () => {
+    //     canvas.width = video.videoWidth;
+    //     canvas.height = video.videoHeight;
+    // });
+    // video.addEventListener('play', () => {
+    //     var $this = this;
+    //     (function loop() {
+    //         if (!$this.paused && !$this.ended) {
+    //             if ($this.width !== canvas.width) {
+    //                 canvas.width = video.videoWidth;
+    //                 canvas.height = video.videoHeight;
+    //             }
+    //             ctx.drawImage(loop, 1000 / 30); // 30 FPS
+    //         }
+    //     })();
+    // }, 0);
 }
 
 // Initializing Agora Client
