@@ -45,3 +45,38 @@ function addCanvas (streamId) {
         })();
     }, 0);
 }
+
+// Initializing Agora Client
+let client = AgoraRTC.createClient({
+    mode: 'live',
+    codec: 'h264'
+});
+
+client.init('c0041179099d492fa2dafcc82ec735c0', () => {
+    console.log('Client Initialized Successfully');
+});
+
+// Client Join
+client.join(null, 'test', null, (uid) => { // Replace the test string with channel name
+    let localStream = AgoraRTC.createStream({
+        streamID: uid,
+        audio: false,
+        video: true,
+        screen: false
+    });
+
+    localStream.init(() => {
+        localStream.play('me');
+        client.publish(localStream, handleFail);
+        client.on('stream-added', (evt) => {
+            client.subscribe(evt.stream, handleFail);
+        });
+        client.on('stream-subscribed', (evt) => {
+            let stream = evt.stream;
+            addVideoStream(stream.getId());
+            stream.play(stream.getId());
+            addCanvas(stream.getId());
+        });
+        client.on('stream-removed', removeVideoStream);
+    }, handleFail);
+}, handleFail);
